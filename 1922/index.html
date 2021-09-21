@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>1922實名制掃描簡訊</title>
+<body>
+<div id="reader" width="600px"></div>
+</body>
+    <script src="./html5-qrcode.min.js"></script>
+	<script>
+		const html5QrCode = new Html5Qrcode("reader");
+		const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+			html5QrCode.stop();			
+			var myDcode = `${decodedText}`;
+			var codeArr = myDcode.split(":")
+			if((codeArr[1] == '1922') && ( (codeArr[0] == 'SMSTO') || (codeArr[0] == 'smsto') )){
+			  window.location.href = "1922.html?qr="+encodeURIComponent(codeArr[2]);
+		    }
+		};
+		const config = { fps: 10, qrbox: 250 };
+		html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
+		
+	</script>
+</head>
+</html>

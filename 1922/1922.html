@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8">
+    <title>1922</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script>
+	    var thisURL = document.URL;      
+	    var getval = thisURL.split('?')[1];    
+	    var showval = getval.split("=")[1]; 
+	   
+	   	function datetimestr(DT){
+			var DTstr = DT.getFullYear() + '年' +  (DT.getMonth()+1) + '月' + DT.getDate() + '日 ( ' + 
+						DT.getHours().toString().padStart(2,'0') + ':' + DT.getMinutes().toString().padStart(2,'0')+' )' ;
+			return DTstr;
+	   		
+	   	}
+	   
+		function smsmsg(Msg,Time){
+			let sms_temp=`
+          <div class="chat-body">
+            <div class="chat-content">
+              <p style="font-size:x-large;">  ${Msg}
+	          </p>	  
+              <time class="chat-time" datetime="" style="font-size:large;">  ${Time} </time>
+            </div>
+          </div>
+			`;	
+			return sms_temp;
+		}
+		
+		
+		function showvalf(){
+			var msgBody = "";
+			var msgArr = [];
+						
+			for(i=0;i<3;i++){
+				msgArr[i] = "";			
+				for(j=0;j<3;j++){
+					for(k=0;k<4;k++){
+						msgArr[i] = msgArr[i] + (Math.floor(Math.random()*9)+1);
+					}
+					msgArr[i] = msgArr[i] + " ";
+				}	
+				for(j=0;j<3;j++){
+						msgArr[i] = msgArr[i] + (Math.floor(Math.random()*9)+1);
+				}
+				msgArr[i] = "場所代碼 ：" + msgArr[i] + " 本次實聯簡訊限防疫目的使用。";
+				var frontDT = new Date( new Date().getTime() - ( 9 - i * 2 ) * (60 + (i+1) * 2) * (60 - i * 3) * 1000 )  ;
+				msgBody = msgBody + smsmsg(msgArr[i],datetimestr( frontDT ));
+			}
+			msgBody = msgBody + smsmsg(decodeURIComponent(showval),datetimestr(new Date()));
+			document.getElementById('smsbody').innerHTML=msgBody;
+		}
+	</script>
+</head>
+
+<body  onload="showvalf()" >
+<div style="backgroud-color=white">
+  <!-- Panel Chat -->
+  <div class="panel" id="chat">
+    <div class="panel-heading">
+      <h3 class="panel-title" style="font-size:xx-large;">
+        <i class="icon wb-chat-text" aria-hidden="true"></i> 1922 
+      </h3>
+    </div>
+    <div class="panel-body">
+      <div class="chats">
+        <div class="chat">			
+		  <div id="smsbody">
+		  </div>			  
+        </div>
+      </div>
+    </div>
+	<!-- Footer-->
+    <div class="panel-footer">
+      <form>
+        <div class="input-group">
+          <input type="text" class="form-control"  style="font-size:x-large;" placeholder="訊息">
+          <span class="input-group-btn">
+            <button class="btn btn-primary"  style="font-size:large;" type="button">傳送</button>
+          </span>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- End Panel Chat -->
+</div>
+
+<style type="text/css">
+	
+html, body {
+background:#ddd;
+height: 100%;
+weight: 100%;
+margin: 0;
+margin-top: 0px;
+margin-bottom: 0px;
+margin-right: 0px;
+margin-left: 0px;
+}
+
+h3 {
+  text-align: center;
+}
+
+.chat-box {
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+    overflow: hidden
+}
+
+.chats {
+    padding: 30px 15px
+}
+
+.chat-body {
+    display: block;
+    margin: 10px 0px 0 0;
+    overflow: hidden
+}
+
+.chat-content {
+    position: relative;
+    display: block;
+    float: right;
+    padding: 10px 10px;
+    margin: 0 5px 10px 0;
+    clear: both;
+    color: #fff;
+    background-color: #33cc33;
+    border-radius: 4px;
+        -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+}
+
+.chat-content:before {
+    position: absolute;
+    top: 10px;
+    right: -10px;
+    width: 0;
+    height: 0;
+    content: '';
+    border: 5px solid transparent;
+    border-left-color: #62a8ea
+}
+
+.chat-content>p:last-child {
+    margin-bottom: 0
+}
+
+.chat-content+.chat-content:before {
+    border-color: transparent
+}
+
+.chat-time {
+    display: block;
+    margin-top: 8px;
+    color: rgba(255, 255, 255, .6)
+}
+
+.panel-footer {
+    padding: 0 30px 50px;
+    background-color: transparent;
+    border-top: 1px solid transparent;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    margin-bottom: 0; /*隨footer高度需做調整*/
+}
+
+</style>
+
+</body>
+</html>
